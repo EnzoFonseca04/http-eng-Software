@@ -204,7 +204,7 @@ custname=Enzo&custtel=13+99999+9999&custemail=danilofofinho2012%40gmail.com&size
 
 ## Atividade 4 — Catálogo de status codes (`http://httpbin.org/...`)
 
-**Captura de tela (lista do Fiddler com as 7 sessões):** ![Uploading image.png…]()
+**Captura de tela (lista do Fiddler com as 7 sessões):** <img width="653" height="397" alt="image" src="https://github.com/user-attachments/assets/f7c54fee-b32b-46f7-b272-e10f26e215d9" />
 
 
 | # | Método | URL | Status-line | `Content-Length` / `Transfer-Encoding` | Body presente? |
@@ -236,20 +236,21 @@ custname=Enzo&custtel=13+99999+9999&custemail=danilofofinho2012%40gmail.com&size
 
 ## Atividade 5 — Identificação de cabeçalhos (`http://httpbin.org/response-headers?...` + `/gzip`)
 
-**Captura de tela (Inspectors → Headers):** `evidencias/atv5_headers.png`
+**Captura de tela (Inspectors → Headers):** <img width="754" height="347" alt="image" src="https://github.com/user-attachments/assets/e3a8cf1b-8b52-4a35-84a5-389618fef316" />
+
 
 | Cabeçalho                    | Req/Resp | Valor capturado | Função em uma frase |
 |------------------------------|----------|------------------|----------------------|
-| `Host`                       | [...]    | [...]            | [...]                |
-| `User-Agent`                 | [...]    | [...]            | [...]                |
-| `Accept`                     | [...]    | [...]            | [...]                |
-| `Accept-Encoding`            | [...]    | [...]            | [...]                |
-| `Cookie`                     | [...]    | [...]            | [...]                |
-| `Server`                     | [...]    | [...]            | [...]                |
-| `Content-Type`               | [...]    | [...]            | [...]                |
-| `Content-Encoding`           | [...]    | [...]            | [...]                |
-| `Set-Cookie`                 | [...]    | [...]            | [...]                |
-| `Cache-Control`              | [...]    | [...]            | [...]                |
+| `Host`                       | REQ   | httpbin.org | [...]           |
+| `User-Agent`                 | REQ    | User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36            | [...]                |
+| `Accept`                     | REQ    | :text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7            | [...] |
+| `Accept-Encoding`            | REQ    | gzip, deflate   | [...]  |
+| `Cookie`                     | REQ    | Cookie: teste=1 | [...]  |
+| `Server`                     | RES    | gunicorn/19.9.0 | [...] |
+| `Content-Type`               | RES    | application/json | [...]  |
+| `Content-Encoding`           | RES    | gzip | [...]  |
+| `Set-Cookie`                 | RES    | teste=1 | [...]|
+| `Cache-Control`              | RES    | max-age=3600 | [...]|
 | `Strict-Transport-Security`  | Não esperado em HTTP — ver Pergunta 5.3 | — | — |
 
 ### Pergunta 5.1
@@ -271,8 +272,9 @@ custname=Enzo&custtel=13+99999+9999&custemail=danilofofinho2012%40gmail.com&size
 
 ## Atividade 6 — HTTP vs HTTPS (análise sem decriptação)
 
-**Captura de tela HTTP (`neverssl.com`):** `evidencias/atv6_http.png`
-**Captura de tela HTTPS (`https://httpbin.org/get`, apenas CONNECT):** `evidencias/atv6_https.png`
+**Captura de tela HTTP (`neverssl.com`):** <img width="754" height="372" alt="image" src="https://github.com/user-attachments/assets/7ed12a78-334a-47c0-9ca5-9c1304cf4700" />
+
+**Captura de tela HTTPS (`https://httpbin.org/get`, apenas CONNECT):** 
 
 ### Pergunta 6.1
 > Que método HTTP aparece na sessão do `https://httpbin.org/get`? O que ele faz e por que existe?
@@ -355,7 +357,8 @@ custname=Enzo&custtel=13+99999+9999&custemail=danilofofinho2012%40gmail.com&size
 
 > **Atividade exclusiva do Fiddler Classic.** Se você utilizou mitmproxy ou HTTP Toolkit, responda às questões 8.1 e 8.2 de forma teórica (sem capturas de tela), indicando que a ferramenta utilizada não suporta breakpoints interativos.
 
-**Captura de tela da edição do User-Agent:** `evidencias/atv8_ua_edit.png`
+**Captura de tela da edição do User-Agent:** 
+
 
 **JSON de resposta após edição:**
 
