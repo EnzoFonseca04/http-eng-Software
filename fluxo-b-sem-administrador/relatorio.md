@@ -274,7 +274,7 @@ custname=Enzo&custtel=13+99999+9999&custemail=danilofofinho2012%40gmail.com&size
 
 **Captura de tela HTTP (`neverssl.com`):** <img width="754" height="372" alt="image" src="https://github.com/user-attachments/assets/7ed12a78-334a-47c0-9ca5-9c1304cf4700" />
 
-**Captura de tela HTTPS (`https://httpbin.org/get`, apenas CONNECT):** 
+**Captura de tela HTTPS (`https://httpbin.org/get`, apenas CONNECT):** <img width="644" height="203" alt="image" src="https://github.com/user-attachments/assets/f35a6160-7cb5-4338-9414-d8b2490194ce" />
 
 ### Pergunta 6.1
 > Que método HTTP aparece na sessão do `https://httpbin.org/get`? O que ele faz e por que existe?
@@ -357,8 +357,7 @@ custname=Enzo&custtel=13+99999+9999&custemail=danilofofinho2012%40gmail.com&size
 
 > **Atividade exclusiva do Fiddler Classic.** Se você utilizou mitmproxy ou HTTP Toolkit, responda às questões 8.1 e 8.2 de forma teórica (sem capturas de tela), indicando que a ferramenta utilizada não suporta breakpoints interativos.
 
-**Captura de tela da edição do User-Agent:** 
-
+**Captura de tela da edição do User-Agent:** <img width="1314" height="860" alt="image" src="https://github.com/user-attachments/assets/f71ad691-08a2-4829-b248-388a02869493" />
 
 **JSON de resposta após edição:**
 
@@ -389,7 +388,7 @@ custname=Enzo&custtel=13+99999+9999&custemail=danilofofinho2012%40gmail.com&size
 
 ## Atividade 9 — Redirecionamento HTTP → HTTPS
 
-**Captura de tela:** `evidencias/atv9_redir.png`
+**Captura de tela:** <img width="1306" height="855" alt="image" src="https://github.com/user-attachments/assets/e1ae7b65-353a-4805-8dd2-831df68f32b8" />
 
 **Status-line da resposta a `http://httpbin.org/redirect-to?status_code=301&url=https%3A%2F%2Fhttpbin.org%2Fget`:**
 
