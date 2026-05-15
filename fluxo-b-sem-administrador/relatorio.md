@@ -220,17 +220,17 @@ custname=Enzo&custtel=13+99999+9999&custemail=danilofofinho2012%40gmail.com&size
 ### Pergunta 4.1
 > Em qual dos status o corpo está ausente/tamanho zero? Isso é obrigatório pela especificação ou depende do servidor?
 
-**Resposta:** [...]
+**Resposta:** No 204 No Content e no 304 Not Modified. Pela RFC 9110, o corpo deve estar ausente nesses casos. Em outros códigos, depende da implementação do servidor.
 
 ### Pergunta 4.2
 > No `301`, qual cabeçalho da resposta informa para onde ir? O que aconteceria se estivesse ausente?
 
-**Resposta:** [...]
+**Resposta:** O cabeçalho Location. Sem ele, o navegador ficaria parado na página de erro, pois não saberia para qual URL seguir.
 
 ### Pergunta 4.3
 > Diferença semântica entre `200`, `304` e `404` do ponto de vista do cache do navegador.
 
-**Resposta:** [...]
+**Resposta:** 200: Conteúdo novo, o cache deve ser atualizado.304: O conteúdo no cache ainda é válido (economiza banda).404: O recurso não existe; o cache deve remover qualquer entrada antiga para essa URL.
 
 ---
 
@@ -241,95 +241,97 @@ custname=Enzo&custtel=13+99999+9999&custemail=danilofofinho2012%40gmail.com&size
 
 | Cabeçalho                    | Req/Resp | Valor capturado | Função em uma frase |
 |------------------------------|----------|------------------|----------------------|
-| `Host`                       | REQ   | httpbin.org | [...]           |
-| `User-Agent`                 | REQ    | User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36            | [...]                |
-| `Accept`                     | REQ    | :text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7            | [...] |
-| `Accept-Encoding`            | REQ    | gzip, deflate   | [...]  |
-| `Cookie`                     | REQ    | Cookie: teste=1 | [...]  |
-| `Server`                     | RES    | gunicorn/19.9.0 | [...] |
-| `Content-Type`               | RES    | application/json | [...]  |
-| `Content-Encoding`           | RES    | gzip | [...]  |
-| `Set-Cookie`                 | RES    | teste=1 | [...]|
-| `Cache-Control`              | RES    | max-age=3600 | [...]|
+| `Host`                       | REQ   | httpbin.org | Indica o domínio do servidor que o cliente quer acessar           |
+| `User-Agent`                 | REQ    | User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36            | Identifica o navegador, sistema operacional e suas versões.                |
+| `Accept`                     | REQ    | :text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7            | Informa os formatos de arquivos que o navegador consegue processar. |
+| `Accept-Encoding`            | REQ    | gzip, deflate   | Informa quais métodos de compressão de dados o navegador suporta.  |
+| `Cookie`                     | REQ    | Cookie: teste=1 | Envia dados guardados anteriormente de volta para o servidor.  |
+| `Server`                     | RES    | gunicorn/19.9.0 | Identifica o software de servidor web que gerou a resposta. |
+| `Content-Type`               | RES    | application/json | Indica o formato do arquivo que o servidor está enviando agora.  |
+| `Content-Encoding`           | RES    | gzip | Indica qual algoritmo foi usado para compactar o corpo desta resposta específica.  |
+| `Set-Cookie`                 | RES    | teste=1 | Comando do servidor para o navegador salvar uma informação |
+| `Cache-Control`              | RES    | max-age=3600 | Regras sobre como o navegador deve armazenar a página localmente. |
 | `Strict-Transport-Security`  | Não esperado em HTTP — ver Pergunta 5.3 | — | — |
 
 ### Pergunta 5.1
 > `Content-Encoding: gzip`/`br` apareceu? Compare `Content-Length`, quando presente, com o conteúdo visível. O que explica a diferença?
 
-**Resposta:** [...]
+**Resposta:** Sim, geralmente gzip. O Content-Length (compactado) será muito menor que o tamanho no TextView (descompactado), pois o Fiddler descompacta o arquivo para leitura humana.
 
 ### Pergunta 5.2
 > Cliente envia `Accept: application/json` mas o recurso só existe em `text/html`. Qual status code esperar?
 
-**Resposta:** [...]
+**Resposta:** O código é 406 Not Acceptable. Significa que o servidor tem o recurso, mas não no formato que o cliente exigiu.
 
 ### Pergunta 5.3
 > `Strict-Transport-Security` apareceu nas respostas HTTP? Por que esse cabeçalho está ausente neste fluxo? (Consulte a RFC 6797.) Qual é seu papel contra downgrades para HTTP puro?
 
-**Resposta:** [...]
+**Resposta:** Ausente. O HSTS (Strict-Transport-Security) só é válido em conexões HTTPS (RFC 6797). Ele serve para impedir ataques de SSL Stripping, forçando o navegador a nunca usar HTTP puro naquele domínio.
 
 ---
 
 ## Atividade 6 — HTTP vs HTTPS (análise sem decriptação)
 
-**Captura de tela HTTP (`neverssl.com`):** <img width="754" height="372" alt="image" src="https://github.com/user-attachments/assets/7ed12a78-334a-47c0-9ca5-9c1304cf4700" />
+**Captura de tela HTTP (`neverssl.com`):** <img width="536" height="854" alt="image" src="https://github.com/user-attachments/assets/19bd759d-e735-418c-9601-9cd6413b987b" />
 
-**Captura de tela HTTPS (`https://httpbin.org/get`, apenas CONNECT):** <img width="644" height="203" alt="image" src="https://github.com/user-attachments/assets/f35a6160-7cb5-4338-9414-d8b2490194ce" />
+
+**Captura de tela HTTPS (`https://httpbin.org/get`, apenas CONNECT):** <img width="535" height="811" alt="image" src="https://github.com/user-attachments/assets/7bcc68c9-ca66-46b6-b889-2fa88edcf0cf" />
+
 
 ### Pergunta 6.1
 > Que método HTTP aparece na sessão do `https://httpbin.org/get`? O que ele faz e por que existe?
 
-**Resposta:** [...]
+**Resposta:** Método CONNECT. Ele serve para criar um "túnel" TCP através de um proxy. O proxy apenas repassa os bytes criptografados entre o navegador e o servidor sem conseguir ler o conteúdo.
 
 ### Pergunta 6.2
 > Tabela comparativa dos campos visíveis ao Fiddler em cada caso:
 
 | Campo                          | Visível em HTTP? | Visível em HTTPS (sem decriptação)? |
 |--------------------------------|------------------|-------------------------------------|
-| Método                         | [...]            | [...]                               |
-| URL completa (path + query)    | [...]            | [...]                               |
-| Cabeçalhos de request          | [...]            | [...]                               |
-| Corpo de request               | [...]            | [...]                               |
-| Status code                    | [...]            | [...]                               |
-| Cabeçalhos de response         | [...]            | [...]                               |
-| Corpo de response              | [...]            | [...]                               |
-| Host (via SNI, no `CONNECT`)   | [...]            | [...]                               |
-| IP e porta de destino          | [...]            | [...]                               |
+| Método                         | Sim            | Sim                               |
+| URL completa (path + query)    | Sim            | Não                               |
+| Cabeçalhos de request          | Sim            | Não                               |
+| Corpo de request               | Não            | Não                               |
+| Status code                    | Sim            | Sim                               |
+| Cabeçalhos de response         | Sim            | Sim                               |
+| Corpo de response              | Sim            | Sim                               |
+| Host (via SNI, no `CONNECT`)   | Sim            | Sim                               |
+| IP e porta de destino          | Não            | Sim                               |
 
 ### Pergunta 6.3 (teórica)
 > O que você **veria** no Fiddler se tivesse privilégio de administrador e pudesse habilitar *Decrypt HTTPS traffic*? Indique telas/abas e justifique por que essa inspeção exige a instalação de um certificado raiz.
 
-**Resposta:** [...]
+**Resposta:** Com decriptação, você veria tudo na aba Inspectors -> Raw (texto claro). Isso exige um certificado raiz porque o Fiddler faz um ataque de Man-in-the-Middle (MitM) consentido, gerando certificados falsos para os sites e assinando-os com sua própria CA que o sistema passou a confiar.
 
 ### Pergunta 6.4
 > Por que a técnica de decriptação dos *debugging proxies* **não** funcionaria contra um usuário se um atacante a tentasse sem instalar o certificado?
 
-**Resposta:** [...]
+**Resposta:** Sem a instalação do certificado, o navegador exibiria um erro de segurança gravíssimo ("Sua conexão não é particular"), bloqueando o acesso. A técnica depende da cooperação do usuário para confiar na autoridade certificadora do atacante/proxy.
 
 ---
 
 ## Atividade 7 — Cookies e sessão (`http://httpbin.org/cookies/...`)
 
-**Captura de tela da sequência:** `evidencias/atv7_cookies.png`
+**Captura de tela da sequência:** <img width="1515" height="943" alt="image" src="https://github.com/user-attachments/assets/a2d48b88-5cc1-4bb3-bd04-3a446563321b" />
 
 | # | URL | `Set-Cookie` recebido | `Cookie` enviado |
 |---|-----|-----------------------|-------------------|
-| 1 | `/cookies/set?...`       | [...] | [nenhum / ...] |
-| 2 | `/cookies` (1ª visita)   | [...] | [...]          |
-| 3 | `/cookies` (reload 1)    | [...] | [...]          |
-| 4 | `/cookies` (reload 2)    | [...] | [...]          |
+| 1 | `/cookies/set?...`       | disciplina=redes; Path=/ e professor=claudio.; Path=/ | [nenhum / ...] |
+| 2 | `/cookies` (1ª visita)   | [...] | disciplina=redes; professor=claudio.          |
+| 3 | `/cookies` (reload 1)    | [...] | disciplina=redes; professor=claudio.          |
+| 4 | `/cookies` (reload 2)    | [...] | disciplina=redes; professor=claudio.          |
 
 ### Pergunta 7.1
 > `Set-Cookie` aparece uma vez ou em toda requisição? Justifique.
 
-**Resposta:** [...]
+**Resposta:** O Set-Cookie aparece apenas na resposta do servidor para criar o cookie. Nas requisições seguintes, o navegador envia o cabeçalho Cookie (sem o "Set-").
 
 ### Pergunta 7.2
 > Que atributos o `Set-Cookie` trouxe? Explique cada um presente. Para atributos não observados, registre `não observado`.
 
 > **Nota:** o httpbin define cookies mínimos — apenas o atributo `Path=/` estará presente. Para cada atributo ausente, registre **não observado** e explique o comportamento padrão do navegador na sua ausência (ex.: sem `Expires`/`Max-Age` → cookie de sessão; sem `Secure` → pode ser enviado por HTTP; sem `SameSite` → o navegador aplica a política padrão da versão em uso).
 
-**Resposta:**
+**Resposta:** Path=/: O cookie vale para todo o site.Expires/Max-Age: (Não observado) Padrão: cookie de sessão (apaga ao fechar o browser).Secure: (Não observado) Padrão: cookie pode ser enviado via HTTP inseguro.HttpOnly: (Não observado) Padrão: JavaScript pode ler o cookie.SameSite: (Não observado) Padrão: varia por browser (Lax no Chrome moderno).
 
 | Atributo  | Valor | Função | Observado? |
 |-----------|-------|--------|------------|
@@ -344,12 +346,12 @@ custname=Enzo&custtel=13+99999+9999&custemail=danilofofinho2012%40gmail.com&size
 ### Pergunta 7.3
 > O atributo `Secure` pode aparecer num cookie recebido por HTTP puro? Qual seria o comportamento esperado? Relacione com o fato de que todo o tráfego desta atividade é visível em texto claro.
 
-**Resposta:** [...]
+**Resposta:** (a) O servidor pode enviar, mas é inútil. (b) O navegador ignora um cookie Secure se recebido via HTTP puro (RFC 6265bis), pois o canal é inseguro e o segredo já pode ter sido interceptado.
 
 ### Pergunta 7.4
 > Na aba **Inspectors → Cookies**, o cookie armazenado coincide com o campo `cookies` do JSON?
 
-**Resposta:** [...]
+**Resposta:** Sim, devem coincidir, pois o JSON do httpbin reflete exatamente o que ele recebeu no cabeçalho Cookie.
 
 ---
 
@@ -370,14 +372,15 @@ custname=Enzo&custtel=13+99999+9999&custemail=danilofofinho2012%40gmail.com&size
 ### Pergunta 8.1
 > O servidor pode detectar que o `User-Agent` foi forjado? Discuta.
 
-**Resposta:** [...]
+**Resposta:** Não de forma infalível. O servidor confia no que o cliente envia, mas pode usar técnicas de fingerprinting (analisando a ordem dos headers ou comportamento TCP) para suspeitar de forja.
 
 ### Pergunta 8.2
 > Após editar a status-line de `200 OK` para `404 Not Found`, o que o navegador exibe? Comente o papel do proxy como MITM.
 
-**Captura de tela:** `evidencias/atv8_status_edit.png`
+**Captura de tela:** <img width="1314" height="860" alt="image" src="https://github.com/user-attachments/assets/3116f0e6-64f6-460a-9c73-423eb4602a64" />
 
-**Resposta:** [...]
+
+**Resposta:** O servidor envia 200, você altera para 404 no Fiddler. O navegador exibirá a página de erro "404 Not Found", provando que o proxy tem controle total sobre a percepção do cliente (Man-in-the-Middle).
 
 ### Pergunta 8.3
 > Confirme que todos os breakpoints foram desabilitados.
@@ -393,47 +396,47 @@ custname=Enzo&custtel=13+99999+9999&custemail=danilofofinho2012%40gmail.com&size
 **Status-line da resposta a `http://httpbin.org/redirect-to?status_code=301&url=https%3A%2F%2Fhttpbin.org%2Fget`:**
 
 ```http
-[colar aqui, ex: HTTP/1.1 301 Moved Permanently]
+[[HTTP/1.1 301 MOVED PERMANENTLY]]
 ```
 
 **Cabeçalho `Location` da resposta:**
 
 ```
-Location: [colar aqui]
+Location: [https://httpbin.org/get]
 ```
 
 ### Pergunta 9.1
 > Código de status e cabeçalho que direcionaram o navegador para `https://`.
 
-**Resposta:** [...]
+**Resposta:** Status 302 Found ou 301 Moved Permanently. O cabeçalho é o Location: https://....
 
 ### Pergunta 9.2
 > Além do redirecionamento 3xx, qual outro mecanismo/cabeçalho faz o navegador passar a forçar HTTPS em visitas futuras? Cite a RFC.
 
-**Resposta:** [...]
+**Resposta:** O mecanismo é o HSTS. Cabeçalho Strict-Transport-Security, definido pela RFC 6797.
 
 ### Pergunta 9.3
 > Se esse cabeçalho fosse enviado por uma resposta servida via HTTP puro, o navegador deveria obedecer? Justifique com base na RFC.
 
-**Resposta:** [...]
+**Resposta:** Não. O navegador deve ignorar o HSTS se recebido via HTTP (RFC 6797, Seção 8.1). Motivo: um atacante na rede poderia injetar um cabeçalho HSTS falso com tempo zero para desativar a segurança ou causar negação de serviço. Confiança só existe após o túnel TLS ser estabelecido.
 
 
 
 ### 7. Impacto prático de `Cache-Control: no-store`.
 
-[resposta]
+[Proíbe qualquer armazenamento de dados, forçando o download integral do servidor a cada acesso para garantir privacidade máxima.]
 
 ### 8. Como um debugging proxy decifra HTTPS sem violar a criptografia, e por que isso exige cooperação do usuário (e por que, justamente, você não pôde executar essa etapa)?
 
-[resposta]
+[O proxy usa um certificado próprio (MitM) para abrir o tráfego; isso exige que você instale manualmente o certificado da ferramenta como confiável no sistema.]
 
 ### 9. Exemplo de cabeçalho de request que o navegador envia automaticamente, sem a página pedir.
 
-[resposta]
+[O User-Agent (identifica o navegador) e o Accept-Language são enviados sem intervenção do código da página.]
 
 ### 10. Se fosse automatizar a inspeção via script, qual ferramenta alternativa escolheria? Por quê?
 
-[resposta]
+[Puppeteer ou Playwright são ideais porque controlam o navegador via código, permitindo interceptar requisições programaticamente.]
 
 ### 11. (Exclusiva do Fluxo B) Três cabeçalhos de segurança que não aparecem ou não fazem sentido em respostas HTTP puro. Para cada um, o que aconteceria se enviado por um servidor HTTP? (Cite RFC 6797 para HSTS.)
 
@@ -441,9 +444,9 @@ Location: [colar aqui]
 
 | Cabeçalho | Comportamento esperado sobre HTTP | Referência |
 |-----------|-----------------------------------|-----------|
-| [...]     | [...]                             | [...]     |
-| [...]     | [...]                             | [...]     |
-| [...]     | [...]                             | [...]     |
+| Strict-Transport-Security (HSTS)     | É ignorado pelo navegador. Conforme a RFC 6797, o HSTS só é válido se enviado via conexão segura (HTTPS).                             | RFC 6797     |
+| Expect-CT     | Não teria efeito prático, pois serve para monitorar a conformidade de Certificados Digitais (Certificate Transparency), inexistentes em HTTP puro.                             | RFC 9163     |
+| Upgrade-Insecure-Requests     | Embora enviado pelo cliente, um servidor HTTP puro não conseguiria forçar o upgrade para uma conexão segura inexistente.                             | W3C CSP     |
 
 ---
 
